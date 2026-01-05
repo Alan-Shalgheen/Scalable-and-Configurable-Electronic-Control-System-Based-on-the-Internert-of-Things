@@ -1,0 +1,23 @@
+IN THE COMMAND FIELD, FOR BOTH THE FUSE BITS TOOL AND THE CODE BURNING TOOL, ONE MUST FILL THE FOLLOWING:
+C:\Program Files (x86)\Arduino\hardware\tools\avr\bin\avrdude.exe
+
+EXPLANATION: This command tells the software where to find AVRDUDE Executive file. NOTE: If someone's AVRDUDE directory is different, one must change this relatively.
+
+For the Fuse Bits ARGUMENT:
+-v -p m32 -c stk500v1 -P COM6 -b 19200 -C "C:\Program Files (x86)\Arduino\hardware\tools\avr\etc\avrdude.conf" -U lfuse:w:0xFF:m -U hfuse:w:0xDE:m
+
+The most important variables here are:
+m32 >>>> ATmega32.  For each AVR model, user must find the AVRDUDE'S dedicated code.
+COM6 >>>> Depends on which COM port the Arduino ISP is connected.
+19200 >>>> The Baud Rate at which the Arduino as ISP is communicating with the computer.
+-U lfuse >>>> this represents the HEX value that fills the LOWER BIT.
+-U hfuse >>>> this represents the HEX value that fills the HIGHER BIT.
+
+Choosing the Values of the lower and higher bits can be done with any AVR FUSE BITS CALCULATOR ONLINE OR DEPENDING ON THE DATASHEET.
+
+
+For the CODE BURNING TOOL ARGUMENT:
+-v -p m32 -c stk500v1 -P COM6 -b 19200 -C "C:\Program Files (x86)\Arduino\hardware\tools\avr\etc\avrdude.conf" -U flash:w:"$(ProjectDir)Debug\$(TargetName).hex":i
+
+The same previous logic rules this, the only difference is just that we are telling the AVRDUDE to Flash the HEX file of the compiled code we made on Atmel studio, this must be the same as here.
+
